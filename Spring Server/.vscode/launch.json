@@ -1,0 +1,24 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-AgriSmartApplication<AgriSmart>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.backend.AgriSmart.AgriSmartApplication",
+            "projectName": "AgriSmart",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-AgriSmartApplication<FarmGenius>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.backend.AgriSmart.AgriSmartApplication",
+            "projectName": "FarmGenius",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
