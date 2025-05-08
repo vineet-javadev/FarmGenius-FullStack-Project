@@ -33,7 +33,9 @@ public class FarmerEntity {
     private String farmerAddress;
     private String farmerPincode;
 
-    private List<String> farmerCrops;
+    @JoinColumn(name = "farmerId")
+    @OneToMany
+    private List<CropEntity> farmerCrops = new ArrayList<>();
 
     @JoinColumn(name = "farmerId")
     @OneToMany
@@ -55,6 +57,6 @@ public class FarmerEntity {
         this.farmerPhone = farmerDaw.getFarmerPhone();
         this.farmerAddress = farmerDaw.getFarmerAddress();
         this.farmerPincode = farmerDaw.getFarmerPincode();
-        this.farmerCrops = farmerDaw.getFarmerCrops();
+        this.farmerCrops = new ArrayList<>(farmerDaw.getFarmerCrops());
     }
 }

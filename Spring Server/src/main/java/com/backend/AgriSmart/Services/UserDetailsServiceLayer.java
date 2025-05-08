@@ -1,7 +1,7 @@
 package com.backend.AgriSmart.Services;
 
 import java.util.Collection;
-import java.util.Collections;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -26,19 +26,20 @@ public class UserDetailsServiceLayer implements UserDetailsService {
         final UserEntity user;
         if (username.endsWith(".com")) {
             user = userRepository.findByUserEmail(username).get();
-        }else{
+        } else {
             user = userRepository.findByUserId(username).get();
         }
 
         if (user == null) {
             throw new UsernameNotFoundException("User not found { UserDetailsServiceLayer service }");
         }
-
         return new UserDetails() {
 
             @Override
             public Collection<? extends GrantedAuthority> getAuthorities() {
-                return Collections.singletonList(new SimpleGrantedAuthority(user.getUserRole().get(1)));
+                return user.getUserRole().stream()
+                        .map(role -> new SimpleGrantedAuthority(role.startsWith("ROLE_") ? role : "ROLE_" + role))
+                        .collect(Collectors.toList());
             }
 
             @Override

@@ -65,7 +65,7 @@ public class PublicController {
             return new ResponseEntity<>(token, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
-            return new ResponseEntity<>("Incorrect Username and Password" , HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>("Incorrect Username and Password" , HttpStatus.NOT_FOUND);
         }
     }
 

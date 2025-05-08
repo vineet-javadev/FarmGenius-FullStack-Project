@@ -33,6 +33,7 @@ public class SecurityConfig{
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
+            .cors(Customizer.withDefaults())
             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
             .csrf(customizer -> customizer.disable())
             .authorizeHttpRequests(request -> request
@@ -41,6 +42,7 @@ public class SecurityConfig{
                 .requestMatchers("/seller/**" , "/product/**").hasRole("SELLER")
                 .requestMatchers("/buyer/**" , "/product/**").hasRole("BUYER")
                 .anyRequest().authenticated())
+                // .anyRequest().permitAll())
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .build();

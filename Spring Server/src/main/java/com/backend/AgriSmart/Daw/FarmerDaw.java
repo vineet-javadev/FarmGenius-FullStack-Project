@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import com.backend.AgriSmart.Entities.FarmerEntity;
 import com.backend.AgriSmart.Entities.LandEntity;
 
+import com.backend.AgriSmart.Entities.CropEntity;
+
 import lombok.Data;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -25,7 +27,7 @@ public class FarmerDaw {
     private String farmerAddress;
     private String farmerPincode;
 
-    private List<String> farmerCrops;
+    private List<CropEntity> farmerCrops;
 
     private List<LandEntity> lands;
 
@@ -41,5 +43,6 @@ public class FarmerDaw {
 
         this.farmerCrops = farmerEntity.getFarmerCrops() != null ? new ArrayList<>(farmerEntity.getFarmerCrops()) : new ArrayList<>();
         this.lands = farmerEntity.getLands() != null ? new ArrayList<>(farmerEntity.getLands()) : new ArrayList<>();
+        
     }
 }
