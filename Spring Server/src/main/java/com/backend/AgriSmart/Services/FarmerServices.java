@@ -45,10 +45,11 @@ public class FarmerServices implements FarmerServicesInterface {
             FarmerEntity temp = new FarmerEntity(farmer);
             temp.setFarmerPassword(passEncoder.encode(farmer.getFarmerPassword()));
             if (farmer.getFarmerCrops() != null) {
-                temp.setFarmerCrops(new ArrayList<>(farmer.getFarmerCrops()));
+                temp.setFarmerCrops(new ArrayList<>());
             } else {
                 temp.setFarmerCrops(null);
             }
+            System.out.println(temp);
             FarmerDaw response = new FarmerDaw(farmerRepository.save(temp));
 
             // assign password to null to password security
@@ -101,7 +102,17 @@ public class FarmerServices implements FarmerServicesInterface {
             FarmerEntity farmer = farmerRepository.findById(id).get();
             List<LandEntity> lands = farmer.getLands();
             for (LandEntity land : lands) {
-                landServices.deleteLand(land.getLandId());
+                if(!landServices.deleteLand(land.getLandId())){
+                    // throw an exception that crop not deleted
+                    throw new Exception("all lands are not deleted");
+                }
+            }
+            List<CropEntity> crops = farmer.getFarmerCrops();
+            for(CropEntity crop : crops){
+                if(!this.removeACropFromList(id, crop.getCropId())){
+                    // throw an exception that crop not deleted
+                    throw new Exception("all crop are not deleted");
+                }
             }
             farmerRepository.deleteById(id);
             return true;
@@ -137,7 +148,7 @@ public class FarmerServices implements FarmerServicesInterface {
                     temp.setFarmerAddress(temp.getFarmerAddress());
                 }
                 if (farmer.getFarmerCrops() != null) {
-                    
+
                     temp.setFarmerCrops(new ArrayList<>(farmer.getFarmerCrops()));
                 } else {
                     temp.setFarmerCrops(temp.getFarmerCrops());
@@ -158,6 +169,7 @@ public class FarmerServices implements FarmerServicesInterface {
         }
     }
 
+    @Override
     public String getAddress(String id) {
         try {
             if (farmerRepository.findById(id).isPresent()) {
@@ -171,6 +183,7 @@ public class FarmerServices implements FarmerServicesInterface {
         }
     }
 
+    @Override
     public List<LandDaw> getFields(String id) {
         try {
             if (farmerRepository.findById(id).isPresent()) {
@@ -188,6 +201,7 @@ public class FarmerServices implements FarmerServicesInterface {
         }
     }
 
+    @Override
     public List<CropDaw> getCrops(String id) {
         try {
             if (farmerRepository.findById(id).isPresent()) {
@@ -205,6 +219,7 @@ public class FarmerServices implements FarmerServicesInterface {
         }
     }
 
+    @Override
     @Transactional
     public List<CropDaw> addNewCropIntoList(String id, CropDaw crop) {
         try {
@@ -216,15 +231,16 @@ public class FarmerServices implements FarmerServicesInterface {
                 }
                 // adding new crop to CropEntity
                 crop.setFarmerId(id);
-                CropEntity temp = new CropEntity(crop);
-                crops.add(temp);
+
                 CropEntity newCrop = new CropEntity(crop);
-                cropRepository.save(newCrop);
+                CropEntity temp = cropRepository.save(newCrop);
+                crops.add(temp);
+                // adding new crop to FarmerEntity
                 farmer.setFarmerCrops(crops);
                 farmerRepository.save(farmer);
                 List<CropDaw> response = new ArrayList<>();
                 for (CropEntity iterable_element : crops) {
-                    response.add(new CropDaw(iterable_element));
+                response.add(new CropDaw(iterable_element));
                 }
                 return response;
             } else {
@@ -236,6 +252,7 @@ public class FarmerServices implements FarmerServicesInterface {
         }
     }
 
+    @Override
     @Transactional
     public Boolean removeACropFromList(String id, Integer crop) {
         try {
@@ -256,6 +273,7 @@ public class FarmerServices implements FarmerServicesInterface {
         }
     }
 
+    @Override
     public CropDaw getCropDetails(Integer cropId) {
         try {
             CropDaw response = new CropDaw(cropRepository.findById(cropId).get());

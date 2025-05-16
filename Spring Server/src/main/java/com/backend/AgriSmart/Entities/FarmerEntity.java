@@ -57,6 +57,5 @@ public class FarmerEntity {
         this.farmerPhone = farmerDaw.getFarmerPhone();
         this.farmerAddress = farmerDaw.getFarmerAddress();
         this.farmerPincode = farmerDaw.getFarmerPincode();
-        this.farmerCrops = new ArrayList<>(farmerDaw.getFarmerCrops());
     }
 }

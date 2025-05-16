@@ -32,11 +32,14 @@ public class FarmerController {
     public ResponseEntity<FarmerDaw> getSingleFarmer() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String farmerId = authentication.getName();
+        System.out.println("Farmerid");
 
         FarmerDaw farmer = farmerServices.getFarmerById(farmerId);
         if (farmer != null) {
+            System.out.println("ready for send farmer details");
             return new ResponseEntity<>(farmer, HttpStatus.OK);
         } else {
+            System.out.println("fail to send farmer details");
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 
         }
@@ -75,6 +78,7 @@ public class FarmerController {
         }
     }
 
+    
     @GetMapping("location")
     public ResponseEntity<String> getAddress() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -87,6 +91,7 @@ public class FarmerController {
         }
     }
 
+    
     @GetMapping("fields")
     public ResponseEntity<?> getFields(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -98,6 +103,7 @@ public class FarmerController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    
     @GetMapping("crops")
     public ResponseEntity<List<CropDaw>> getCrops(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -109,6 +115,7 @@ public class FarmerController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    
     @PostMapping("addCrop")
     public ResponseEntity<List<CropDaw>> addNewCropIntoList(@RequestBody CropDaw crop) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -120,6 +127,7 @@ public class FarmerController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    
     @DeleteMapping("removeCrop/{crop}")
     public ResponseEntity<Boolean> removeACropFromList(@PathVariable Integer crop){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -132,4 +140,12 @@ public class FarmerController {
         }
     }
     
+    @GetMapping("getCrop/{crop}")
+    public ResponseEntity<CropDaw> getACrop(@PathVariable Integer crop){
+        CropDaw response = farmerServices.getCropDetails(crop);
+        if(response != null){
+            return new ResponseEntity<>(response , HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 }

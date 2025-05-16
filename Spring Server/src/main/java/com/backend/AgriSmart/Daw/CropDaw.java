@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class CropDaw {
     private int cropId;
     private String cropName;
-    private String landArea;
+    private String quantity;
     private String photo;
     private Double price;
     private String description;
@@ -24,9 +24,10 @@ public class CropDaw {
     public CropDaw(CropEntity entity) {
         this.cropId = entity.getCropId();
         this.cropName = entity.getCropName();
-        this.landArea = entity.getLandArea();
+        this.quantity = entity.getQuantity();
         this.photo = entity.getPhoto();
         this.price = entity.getPrice();
+        this.farmerId = entity.getFarmerId();
         this.createdDate = entity.getCreatedDate();
         this.description = entity.getDescription();
     }

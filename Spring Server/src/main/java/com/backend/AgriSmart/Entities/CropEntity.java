@@ -23,7 +23,7 @@ public class CropEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int cropId;
     private String cropName;
-    private String landArea;
+    private String quantity;
     private String photo;
     private Double price;
     private String description;
@@ -32,7 +32,7 @@ public class CropEntity {
 
     public CropEntity(CropDaw entity) {
         this.cropName = entity.getCropName();
-        this.landArea = entity.getLandArea();
+        this.quantity = entity.getQuantity();
         this.photo = entity.getPhoto();
         this.price = entity.getPrice();
         this.description = entity.getDescription();
