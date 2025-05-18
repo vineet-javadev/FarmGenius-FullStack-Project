@@ -18,7 +18,9 @@ import com.backend.AgriSmart.Repositories.UserRepository;
 import com.backend.AgriSmart.ServiceImpl.SellerServicesInterface;
 
 import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 public class SellerServices implements SellerServicesInterface {
 
@@ -48,7 +50,7 @@ public class SellerServices implements SellerServicesInterface {
             response.setSellerPassword(null);
             return response;
         } catch (Exception e) {
-            System.err.print("Somthing went Wrong {SellerServices - registerSeller method}");
+            log.error("Somthing went Wrong {SellerServices - registerSeller method} : {}", e.getMessage());
             return null;
         }
     }
@@ -60,7 +62,7 @@ public class SellerServices implements SellerServicesInterface {
             response.setSellerPassword(null);
             return response;
         } catch (Exception e) {
-            System.err.print("Somthing went Wrong {SellerServices - getSellerDetails method}");
+            log.error("Somthing went Wrong {SellerServices - getSellerDetails method} : {}", e.getMessage());
             return null;
         }
     }
@@ -85,29 +87,34 @@ public class SellerServices implements SellerServicesInterface {
             if (sellerDaw.getSellerContact() != null || !sellerDaw.getSellerContact().isEmpty()) {
                 fromDB.setSellerContact(sellerDaw.getSellerContact());
             }
-            if( sellerDaw.getSellerProfilePic() != null || !sellerDaw.getSellerProfilePic().isEmpty()){
+            if (sellerDaw.getSellerProfilePic() != null || !sellerDaw.getSellerProfilePic().isEmpty()) {
                 fromDB.setSellerProfilePic(sellerDaw.getSellerProfilePic());
             }
             SellerDaw response = new SellerDaw(sellerReopsitory.save(fromDB));
             response.setSellerPassword(null);
             return response;
         } catch (Exception e) {
-            System.err.print("Somthing went Wrong {SellerServices - updateDetails method}");
+            log.error("Somthing went Wrong {SellerServices - updateDetails method} : {}", e.getMessage());
             return null;
         }
     }
 
     @Override
     public boolean deleteAccount(String id) {
-        if (sellerReopsitory.existsById(id)) {
-            try {
-                sellerReopsitory.deleteById(id);
-                return true;
-            } catch (Exception e) {
-                return false;
+        try {
+            if (sellerReopsitory.existsById(id)) {
+                try {
+                    sellerReopsitory.deleteById(id);
+                    return true;
+                } catch (Exception e) {
+                    return false;
+                }
             }
+            return false;
+        } catch (Exception e) {
+            log.error("Somthing went Wrong {SellerServices - deleteAccount method} : {}", e.getMessage());
+            return false;
         }
-        return false;
     }
 
     @Override
@@ -123,7 +130,7 @@ public class SellerServices implements SellerServicesInterface {
             sellerReopsitory.save(fromDB);
             return newProduct;
         } catch (Exception e) {
-            System.err.print("Somthing went Wrong {SellerServices - addProduct method}");
+            log.error("Somthing went Wrong {SellerServices - addProduct method} : {}", e.getMessage());
             return null;
         }
     }
@@ -142,7 +149,7 @@ public class SellerServices implements SellerServicesInterface {
             }
             return false;
         } catch (Exception e) {
-            System.err.print("Somthing went Wrong {SellerServices - removeProduct method}");
+            log.error("Somthing went Wrong {SellerServices - removeProduct method} : {}", e.getMessage());
             return false;
         }
     }
@@ -158,7 +165,7 @@ public class SellerServices implements SellerServicesInterface {
             return result;
 
         } catch (Exception e) {
-            System.err.print("Somthing went Wrong {SellerServices - getAllProducts method}");
+            log.error("Somthing went Wrong {SellerServices - getAllProducts method} : {}", e.getMessage());
             return null;
         }
     }

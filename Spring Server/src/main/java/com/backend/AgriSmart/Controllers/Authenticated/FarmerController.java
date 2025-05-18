@@ -19,8 +19,11 @@ import com.backend.AgriSmart.Daw.FarmerDaw;
 import com.backend.AgriSmart.Daw.LandDaw;
 import com.backend.AgriSmart.Services.FarmerServices;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("/farmer")
 public class FarmerController {
@@ -32,14 +35,12 @@ public class FarmerController {
     public ResponseEntity<FarmerDaw> getSingleFarmer() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String farmerId = authentication.getName();
-        System.out.println("Farmerid");
 
         FarmerDaw farmer = farmerServices.getFarmerById(farmerId);
         if (farmer != null) {
-            System.out.println("ready for send farmer details");
             return new ResponseEntity<>(farmer, HttpStatus.OK);
         } else {
-            System.out.println("fail to send farmer details");
+            log.error("Farmer not found with id: " + farmerId);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 
         }
@@ -51,6 +52,7 @@ public class FarmerController {
         if (farmers != null) {
             return new ResponseEntity<>(farmers, HttpStatus.OK);
         } else {
+            log.error("No farmers found");
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -77,7 +79,6 @@ public class FarmerController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
-
     
     @GetMapping("location")
     public ResponseEntity<String> getAddress() {
@@ -90,8 +91,7 @@ public class FarmerController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-
-    
+  
     @GetMapping("fields")
     public ResponseEntity<?> getFields(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -102,8 +102,7 @@ public class FarmerController {
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-
-    
+   
     @GetMapping("crops")
     public ResponseEntity<List<CropDaw>> getCrops(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -115,7 +114,6 @@ public class FarmerController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    
     @PostMapping("addCrop")
     public ResponseEntity<List<CropDaw>> addNewCropIntoList(@RequestBody CropDaw crop) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -127,7 +125,6 @@ public class FarmerController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    
     @DeleteMapping("removeCrop/{crop}")
     public ResponseEntity<Boolean> removeACropFromList(@PathVariable Integer crop){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

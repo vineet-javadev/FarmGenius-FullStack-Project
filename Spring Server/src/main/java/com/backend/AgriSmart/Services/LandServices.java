@@ -7,12 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.backend.AgriSmart.Daw.LandDaw;
 import com.backend.AgriSmart.Daw.FarmerDaw;
+import com.backend.AgriSmart.Daw.LandDaw;
 import com.backend.AgriSmart.Entities.LandEntity;
 import com.backend.AgriSmart.Repositories.LandReopsitory;
 import com.backend.AgriSmart.ServiceImpl.LandServicesInterface;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class LandServices implements LandServicesInterface {
 
@@ -40,7 +43,7 @@ public class LandServices implements LandServicesInterface {
             return new LandDaw(created);
 
         } catch (Exception e) {
-            System.err.print("Somthing went Wrong {LandSErvices - addLand method}");
+            log.error("Somthing went Wrong {LandSErvices - addLand method} : {}", e.getMessage());
             return null;
         }
     }
@@ -54,7 +57,7 @@ public class LandServices implements LandServicesInterface {
                 return null;
             }
         } catch (Exception e) {
-            System.err.print("Somthing went Wrong {LandSErvices - getLandById method}");
+            log.error("Somthing went Wrong {LandSErvices - getLandById method} : {}", e.getMessage());
             return null;
         }
             
@@ -65,7 +68,7 @@ public class LandServices implements LandServicesInterface {
         try {
             return landReopsitory.findAll().stream().map(LandDaw::new).collect(Collectors.toList());
         } catch (Exception e) {
-            System.err.print("Somthing went Wrong {LandSErvices - getAllLands method}");
+            log.error("Somthing went Wrong {LandSErvices - getAllLands method} : {}", e.getMessage());
             return null;
         }
     }
@@ -85,7 +88,7 @@ public class LandServices implements LandServicesInterface {
                 return false;
             }
         } catch (Exception e) {
-            System.err.print("Somthing went Wrong {LandSErvices - deleteLand method}");
+            log.error("Somthing went Wrong {LandSErvices - deleteLand method} : {}", e.getMessage());
             return false;
         }
     }
@@ -116,7 +119,7 @@ public class LandServices implements LandServicesInterface {
                 return null;
             }
         } catch (Exception e) {
-            System.err.print("Somthing went Wrong {LandSErvices - updateLand method}");
+            log.error("Somthing went Wrong {LandSErvices - updateLand method} : {}", e.getMessage());
             return null;
         }
     }

@@ -19,6 +19,16 @@
             "projectName": "FarmGenius",
             "args": "",
             "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-AgriSmartApplication<FarmGenius>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.backend.agrismart.AgriSmartApplication",
+            "projectName": "FarmGenius",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
         }
     ]
 }

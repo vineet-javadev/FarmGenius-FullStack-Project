@@ -1,23 +1,18 @@
 package com.backend.AgriSmart.Controllers.Public;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.backend.AgriSmart.Daw.BuyerDaw;
 import com.backend.AgriSmart.Daw.FarmerDaw;
 import com.backend.AgriSmart.Daw.SellerDaw;
 import com.backend.AgriSmart.Daw.UserDaw;
-import com.backend.AgriSmart.Entities.UserEntity;
 import com.backend.AgriSmart.Repositories.UserRepository;
 import com.backend.AgriSmart.Services.BuyerServices;
 import com.backend.AgriSmart.Services.FarmerServices;
@@ -25,6 +20,14 @@ import com.backend.AgriSmart.Services.JwtServices;
 import com.backend.AgriSmart.Services.SellerServices;
 import com.backend.AgriSmart.Services.UserDetailsServiceLayer;
 
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RestController
 @RequestMapping("/public")
 public class PublicController {
@@ -64,7 +67,7 @@ public class PublicController {
             String token = jwtServices.generateToken(user.getUsername());
             return new ResponseEntity<>(token, HttpStatus.OK);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.warn("Login failed: {}", e.getMessage());
             return new ResponseEntity<>("Incorrect Username and Password" , HttpStatus.NOT_FOUND);
         }
     }
@@ -101,9 +104,4 @@ public class PublicController {
         }
     }   
 
-    @GetMapping
-    public UserEntity getUsers(){
-
-        return userRepository.findByUserEmail("raj@gmail.com").get();
-    }
 }

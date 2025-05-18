@@ -1,12 +1,12 @@
 package com.backend.AgriSmart.Daw;
 
 import java.util.List;
-import java.util.ArrayList;
 
+import com.backend.AgriSmart.Entities.CropEntity;
 import com.backend.AgriSmart.Entities.FarmerEntity;
 import com.backend.AgriSmart.Entities.LandEntity;
 
-import com.backend.AgriSmart.Entities.CropEntity;
+import java.util.ArrayList;
 
 import lombok.Data;
 import lombok.AllArgsConstructor;

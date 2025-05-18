@@ -14,6 +14,9 @@ import org.springframework.stereotype.Service;
 import com.backend.AgriSmart.Entities.UserEntity;
 import com.backend.AgriSmart.Repositories.UserRepository;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class UserDetailsServiceLayer implements UserDetailsService {
 
@@ -31,7 +34,8 @@ public class UserDetailsServiceLayer implements UserDetailsService {
         }
 
         if (user == null) {
-            throw new UsernameNotFoundException("User not found { UserDetailsServiceLayer service }");
+            log.error("User not found with username: {}", username);
+            return null;
         }
         return new UserDetails() {
 

@@ -11,6 +11,9 @@ import com.backend.AgriSmart.Repositories.CommentRepository;
 import com.backend.AgriSmart.Repositories.ProductRepository;
 import com.backend.AgriSmart.ServiceImpl.CommentServicesInterface;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class CommentServices implements CommentServicesInterface {
 
@@ -32,8 +35,8 @@ public class CommentServices implements CommentServicesInterface {
             return new CommentDaw(save);
 
         } catch (Exception e) {
-            System.out.println(
-                    "Something is wrong in CommentServices file in updateCommentContent method\n\n" + e + "\n");
+            log.error(
+                    "Something is wrong in CommentServices file in updateCommentContent method\n\n" + e.getMessage() + "\n");
             return null;
         }
     }
@@ -59,7 +62,7 @@ public class CommentServices implements CommentServicesInterface {
 
             return new CommentDaw(respose);
         } catch (Exception e) {
-            System.out.println("Something is wrong in CommentServices file in addNewComment method\n\n" + e + "\n");
+            log.error("Something is wrong in CommentServices file in addNewComment method\n\n" + e.getMessage() + "\n");
             return null;
         }
     }
@@ -80,7 +83,7 @@ public class CommentServices implements CommentServicesInterface {
             }
             return false;
         } catch (Exception e) {
-            System.out.println("Something is wrong in CommentServices file in deleteComment method\n\n" + e + "\n");
+            log.error("Something is wrong in CommentServices file in deleteComment method\n\n" + e.getMessage() + "\n");
             return false;
         }
     }

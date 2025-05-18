@@ -34,7 +34,6 @@ public class CommentController {
     }
 
     @DeleteMapping("/{commentId}")
-    // DELETE http://localhost:8080/comment/{commentId}?productId=ProductId
     public ResponseEntity<?> removeComment(@PathVariable Integer commentId , @RequestParam String productId){
         if(commentServices.deleteComment(commentId , productId)){
             return new ResponseEntity<>(HttpStatus.OK);
@@ -43,7 +42,6 @@ public class CommentController {
     }
     
     @PutMapping("/{commentId}")
-    // PUT http://localhost:8080/comment/{commentId}?content=newContent
     public ResponseEntity<CommentDaw> updateComment(@PathVariable Integer commentId , @RequestParam String content){
         CommentDaw response = commentServices.updateCommentContent(commentId, content);
         if (response==null) {

@@ -12,6 +12,9 @@ import com.backend.AgriSmart.Entities.CategoryEntity;
 import com.backend.AgriSmart.Repositories.CategoryRepository;
 import com.backend.AgriSmart.ServiceImpl.CategoryServicesInterface;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class CategoryServices  implements CategoryServicesInterface {
 
@@ -28,7 +31,7 @@ public class CategoryServices  implements CategoryServicesInterface {
             return new CategoryDaw(response);
 
         } catch (Exception e) {
-            System.err.print("Somthing went wrong { CategoryServices - addCategory Method }");
+            log.error("Somthing went wrong { CategoryServices - addCategory Method } : {}", e.getMessage());
             return null;
         }
     }
@@ -42,8 +45,9 @@ public class CategoryServices  implements CategoryServicesInterface {
             }
             return result;
         } catch (Exception e) {
-            System.err.print("Somthing went wrong { CategoryServices - findByTitle method }");
+            log.error("Somthing went wrong { CategoryServices - findByTitle method } : {}", e.getMessage());
             return null;
         }
     }
+
 }

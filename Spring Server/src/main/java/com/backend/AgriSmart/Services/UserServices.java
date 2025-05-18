@@ -8,6 +8,9 @@ import com.backend.AgriSmart.Entities.UserEntity;
 import com.backend.AgriSmart.Repositories.UserRepository;
 import com.backend.AgriSmart.ServiceImpl.UserServiceInterface;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class  UserServices implements UserServiceInterface {
 
@@ -33,7 +36,7 @@ public class  UserServices implements UserServiceInterface {
                 return null;
             }
         } catch (Exception e) {
-            System.out.println("Error in forgotPassword: " + e.getMessage());
+            log.error("Error in forgotPassword : {} " , e.getMessage());
             return null;
         }
     }

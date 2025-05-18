@@ -11,7 +11,9 @@ import com.backend.AgriSmart.Repositories.ProductRepository;
 import com.backend.AgriSmart.ServiceImpl.ProductServicesInterface;
 
 import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 public class ProductServices implements ProductServicesInterface {
 
@@ -26,7 +28,7 @@ public class ProductServices implements ProductServicesInterface {
         try {
             return new ProductDaw(productRepository.findById(pId).get());
         } catch (Exception e) {
-            System.err.print("Something went wrong { ProductServices - findById}");
+            log.error("Something went wrong { ProductServices - findById} : {}", e.getMessage());
             return null;
         }
     }
@@ -43,7 +45,7 @@ public class ProductServices implements ProductServicesInterface {
             categoryRepository.save(fromDB);
             return new ProductDaw(response);
         } catch (Exception e) {
-            System.err.print("Something went wrong { ProductServices - createProduct}");
+            log.error("Something went wrong { ProductServices - createProduct} : {}", e.getMessage());
             return null;
         }
     }
@@ -83,7 +85,7 @@ public class ProductServices implements ProductServicesInterface {
         } catch (
 
         Exception e) {
-            System.err.print("Something went wrong { ProductServices - updateProduct}");
+            log.error("Something went wrong { ProductServices - updateProduct} : {}", e.getMessage());
             return null;
         }
     }
@@ -102,7 +104,7 @@ public class ProductServices implements ProductServicesInterface {
             }
             return false;
         } catch (Exception e) {
-            System.err.print("Something went wrong { ProductServices - deleteProduct}");
+            log.error("Something went wrong { ProductServices - deleteProduct} : {}", e.getMessage());
             return false;
         }
     }

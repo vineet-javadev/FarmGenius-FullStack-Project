@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,8 @@ import com.backend.AgriSmart.ServiceImpl.FarmerServicesInterface;
 
 @Service
 public class FarmerServices implements FarmerServicesInterface {
+
+    private static final Logger log = LoggerFactory.getLogger(FarmerServices.class);
 
     @Autowired
     private FarmerRepository farmerRepository;
@@ -49,7 +53,6 @@ public class FarmerServices implements FarmerServicesInterface {
             } else {
                 temp.setFarmerCrops(null);
             }
-            System.out.println(temp);
             FarmerDaw response = new FarmerDaw(farmerRepository.save(temp));
 
             // assign password to null to password security
@@ -61,7 +64,7 @@ public class FarmerServices implements FarmerServicesInterface {
 
             return response;
         } catch (Exception e) {
-            System.err.print("Somthing went Wrong {FarmerServices - registerFarmer method}");
+            log.error("Something went Wrong {FarmerServices - registerFarmer method} : {}" , e.getMessage());
             return null;
         }
     }
@@ -73,7 +76,7 @@ public class FarmerServices implements FarmerServicesInterface {
             response.setFarmerPassword(null);
             return response;
         } catch (Exception e) {
-            System.err.print("Somthing went Wrong {FarmerServices - getFarmerById method}");
+            log.error("Somthing went Wrong {FarmerServices - getFarmerById method} : {}" , e.getMessage());
             return null;
         }
     }
@@ -90,7 +93,7 @@ public class FarmerServices implements FarmerServicesInterface {
             return response;
 
         } catch (Exception e) {
-            System.err.print("Somthing went Wrong {FarmerServices - getAllFarmer method}");
+            log.error("Somthing went Wrong {FarmerServices - getAllFarmer method}");
             return null;
         }
     }
@@ -117,7 +120,7 @@ public class FarmerServices implements FarmerServicesInterface {
             farmerRepository.deleteById(id);
             return true;
         } catch (Exception e) {
-            System.err.print("Somthing went Wrong {FarmerServices - deleteFarmer method}");
+            log.error("Somthing went Wrong {FarmerServices - deleteFarmer method} : {}" , e.getMessage());
             return false;
         }
     }
@@ -164,7 +167,7 @@ public class FarmerServices implements FarmerServicesInterface {
             }
             return null;
         } catch (Exception e) {
-            System.err.print("Somthing went Wrong {FarmerServices - UpdateFarmer method}");
+            log.error("Somthing went Wrong {FarmerServices - UpdateFarmer method} : {}" , e.getMessage());
             return null;
         }
     }
@@ -178,7 +181,7 @@ public class FarmerServices implements FarmerServicesInterface {
                 return null;
             }
         } catch (Exception e) {
-            System.err.print("Somthing went Wrong {FarmerServices - getAddress method}");
+            log.error("Somthing went Wrong {FarmerServices - getAddress method} : {}" , e.getMessage());
             return null;
         }
     }
@@ -196,7 +199,7 @@ public class FarmerServices implements FarmerServicesInterface {
                 return null;
             }
         } catch (Exception e) {
-            System.err.print("Somthing went Wrong {FarmerServices - getAddress method}");
+            log.error("Somthing went Wrong {FarmerServices - getAddress method} : {}" , e.getMessage());
             return null;
         }
     }
@@ -214,7 +217,7 @@ public class FarmerServices implements FarmerServicesInterface {
                 return null;
             }
         } catch (Exception e) {
-            System.err.print("Somthing went Wrong {FarmerServices - getAddress method}");
+            log.error("Somthing went Wrong {FarmerServices - getAddress method} : {}" , e.getMessage());
             return null;
         }
     }
@@ -247,7 +250,7 @@ public class FarmerServices implements FarmerServicesInterface {
                 return null;
             }
         } catch (Exception e) {
-            System.err.print("Something went Wrong {FarmerServices - addNewCropIntoList method}");
+            log.error("Something went Wrong {FarmerServices - addNewCropIntoList method} : {}" , e.getMessage());
             return null;
         }
     }
@@ -268,7 +271,7 @@ public class FarmerServices implements FarmerServicesInterface {
                 return false;
             }
         } catch (Exception e) {
-            System.err.print("Something went Wrong {FarmerServices - addNewCropIntoList method}");
+            log.error("Something went Wrong {FarmerServices - addNewCropIntoList method} : {}" , e.getMessage());
             return false;
         }
     }
@@ -280,7 +283,7 @@ public class FarmerServices implements FarmerServicesInterface {
 
             return response;
         } catch (Exception e) {
-            System.err.print("Something went Wrong {FarmerServices - getCropDetails method}");
+            log.error("Something went Wrong {FarmerServices - getCropDetails method} : {}" , e.getMessage());
             return null;
         }
     }
