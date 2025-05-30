@@ -36,6 +36,8 @@ public class FarmerController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String farmerId = authentication.getName();
 
+        System.out.println("Farmer ID: " + farmerId);
+
         FarmerDaw farmer = farmerServices.getFarmerById(farmerId);
         if (farmer != null) {
             return new ResponseEntity<>(farmer, HttpStatus.OK);
