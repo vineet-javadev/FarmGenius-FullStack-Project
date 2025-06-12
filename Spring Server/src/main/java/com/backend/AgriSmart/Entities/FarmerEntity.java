@@ -30,7 +30,7 @@ public class FarmerEntity {
 
     private String farmerProfilePic;
     private String farmerName;
-    private String farmerPhone;
+    private String farmerContact;
     private String farmerAddress;
     private String farmerPincode;
 
@@ -55,7 +55,7 @@ public class FarmerEntity {
         this.farmerPassword = farmerDaw.getFarmerPassword();
         this.farmerProfilePic = farmerDaw.getFarmerProfilePic();
         this.farmerName = farmerDaw.getFarmerName();
-        this.farmerPhone = farmerDaw.getFarmerPhone();
+        this.farmerContact = farmerDaw.getFarmerContact();
         this.farmerAddress = farmerDaw.getFarmerAddress();
         this.farmerPincode = farmerDaw.getFarmerPincode();
     }

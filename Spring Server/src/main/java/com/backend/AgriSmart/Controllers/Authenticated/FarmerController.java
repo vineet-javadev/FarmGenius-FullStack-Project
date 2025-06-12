@@ -1,6 +1,5 @@
 package com.backend.AgriSmart.Controllers.Authenticated;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -28,18 +27,22 @@ import java.util.List;
 @RequestMapping("/farmer")
 public class FarmerController {
 
-    @Autowired
     private FarmerServices farmerServices;
+
+    public FarmerController(FarmerServices farmerServices) {
+        this.farmerServices = farmerServices;
+    }
 
     @GetMapping
     public ResponseEntity<FarmerDaw> getSingleFarmer() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String farmerId = authentication.getName();
 
-        System.out.println("Farmer ID: " + farmerId);
-
         FarmerDaw farmer = farmerServices.getFarmerById(farmerId);
         if (farmer != null) {
+            farmer.setUserRole(authentication.getAuthorities().stream()
+                .map(authority -> authority.getAuthority())
+                .toList());
             return new ResponseEntity<>(farmer, HttpStatus.OK);
         } else {
             log.error("Farmer not found with id: " + farmerId);
@@ -49,7 +52,7 @@ public class FarmerController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<?> getAllFarmers() {
+    public ResponseEntity<List<FarmerDaw>> getAllFarmers() {
         List<FarmerDaw> farmers = farmerServices.getAllFarmers();
         if (farmers != null) {
             return new ResponseEntity<>(farmers, HttpStatus.OK);

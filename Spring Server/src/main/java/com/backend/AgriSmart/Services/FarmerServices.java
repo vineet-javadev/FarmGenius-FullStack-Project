@@ -140,10 +140,10 @@ public class FarmerServices implements FarmerServicesInterface {
                 } else {
                     temp.setFarmerEmail(temp.getFarmerEmail());
                 }
-                if (farmer.getFarmerPhone() != null) {
-                    temp.setFarmerPhone(farmer.getFarmerPhone());
+                if (farmer.getFarmerContact() != null) {
+                    temp.setFarmerContact(farmer.getFarmerContact());
                 } else {
-                    temp.setFarmerPhone(temp.getFarmerPhone());
+                    temp.setFarmerContact(temp.getFarmerContact());
                 }
                 if (farmer.getFarmerAddress() != null) {
                     temp.setFarmerAddress(farmer.getFarmerAddress());

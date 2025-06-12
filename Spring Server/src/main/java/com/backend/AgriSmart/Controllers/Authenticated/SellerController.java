@@ -33,9 +33,13 @@ public class SellerController {
     public ResponseEntity<SellerDaw> getDetails() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String id = authentication.getName();
-        SellerDaw response = sellerServices.getSellerDetails(id);
-        if (response != null)
-            return new ResponseEntity<>(response, HttpStatus.OK);
+        SellerDaw seller = sellerServices.getSellerDetails(id);
+        if (seller != null) {
+            seller.setUserRole(authentication.getAuthorities().stream()
+                .map(authority -> authority.getAuthority())
+                .toList());
+            return new ResponseEntity<>(seller, HttpStatus.OK);
+        }
         return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
 

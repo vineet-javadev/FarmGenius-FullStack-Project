@@ -1,5 +1,7 @@
 package com.backend.AgriSmart.Daw;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import com.backend.AgriSmart.Entities.BuyerEntity;
@@ -20,6 +22,8 @@ public class BuyerDaw {
     private String buyerAddress;
     private String buyerProfilePic;
     private Set<String> carts;
+
+    private List<String> userRole = new ArrayList<>();
 
     // Create a copy constructer to initialize the BuyerDaw object with the BuyerEntity object
     public BuyerDaw(BuyerEntity buyer) {

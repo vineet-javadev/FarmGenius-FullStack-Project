@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.backend.AgriSmart.Daw.BuyerDaw;
 import com.backend.AgriSmart.Daw.FarmerDaw;
+import com.backend.AgriSmart.Daw.LoginResponseDaw;
 import com.backend.AgriSmart.Daw.SellerDaw;
 import com.backend.AgriSmart.Daw.UserDaw;
 import com.backend.AgriSmart.Repositories.UserRepository;
@@ -60,15 +61,18 @@ public class PublicController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody UserDaw userDaw){
+    public ResponseEntity<LoginResponseDaw> login(@RequestBody UserDaw userDaw){
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userDaw.getUserEmail(), userDaw.getUserPassword()));
             UserDetails user = userDetailsServiceLayer.loadUserByUsername(userDaw.getUserEmail());
             String token = jwtServices.generateToken(user.getUsername());
-            return new ResponseEntity<>(token, HttpStatus.OK);
+            LoginResponseDaw loginResponse = new LoginResponseDaw(token, user.getAuthorities().stream()
+                .map(authority -> authority.getAuthority())
+                .toList());
+            return new ResponseEntity<>(loginResponse, HttpStatus.OK);
         } catch (Exception e) {
             log.warn("Login failed: {}", e.getMessage());
-            return new ResponseEntity<>("Incorrect Username and Password" , HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>( HttpStatus.NOT_FOUND);
         }
     }
 

@@ -34,8 +34,12 @@ public class BuyerController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String id = authentication.getName();
         BuyerDaw buyerDaw = buyerServices.getBuyer(id);
-        if (buyerDaw != null)
+        if (buyerDaw != null) {
+            buyerDaw.setUserRole(authentication.getAuthorities().stream()
+                    .map(authority -> authority.getAuthority())
+                    .toList());
             return new ResponseEntity<>(buyerDaw, HttpStatus.OK);
+        }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
@@ -77,7 +81,7 @@ public class BuyerController {
         String id = authentication.getName();
         ProductDaw productDaw = buyerServices.addProductIntoCart(pId, id);
         if (productDaw != null)
-            return new ResponseEntity<>(productDaw , HttpStatus.OK);
+            return new ResponseEntity<>(productDaw, HttpStatus.OK);
         return new ResponseEntity<>(HttpStatus.FORBIDDEN);
     }
 
@@ -86,7 +90,7 @@ public class BuyerController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String id = authentication.getName();
         if (buyerServices.removeProductFromCart(pId, id))
-            return new ResponseEntity<>( HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.OK);
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 

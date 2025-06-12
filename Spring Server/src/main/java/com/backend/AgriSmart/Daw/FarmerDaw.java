@@ -1,12 +1,12 @@
 package com.backend.AgriSmart.Daw;
 
 import java.util.List;
+import java.util.ArrayList;
 
 import com.backend.AgriSmart.Entities.CropEntity;
 import com.backend.AgriSmart.Entities.FarmerEntity;
 import com.backend.AgriSmart.Entities.LandEntity;
 
-import java.util.ArrayList;
 
 import lombok.Data;
 import lombok.AllArgsConstructor;
@@ -23,9 +23,11 @@ public class FarmerDaw {
 
     private String farmerProfilePic;
     private String farmerName;
-    private String farmerPhone;
+    private String farmerContact;
     private String farmerAddress;
     private String farmerPincode;
+
+    private List<String> userRole = new ArrayList<>();
 
     private List<CropEntity> farmerCrops;
 
@@ -37,7 +39,7 @@ public class FarmerDaw {
         this.farmerPassword = farmerEntity.getFarmerPassword();
         this.farmerProfilePic = farmerEntity.getFarmerProfilePic();
         this.farmerName = farmerEntity.getFarmerName();
-        this.farmerPhone = farmerEntity.getFarmerPhone();
+        this.farmerContact = farmerEntity.getFarmerContact();
         this.farmerAddress = farmerEntity.getFarmerAddress();
         this.farmerPincode = farmerEntity.getFarmerPincode();
 

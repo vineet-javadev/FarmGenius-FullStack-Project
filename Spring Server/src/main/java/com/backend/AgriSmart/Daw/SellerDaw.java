@@ -1,6 +1,8 @@
 package com.backend.AgriSmart.Daw;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import com.backend.AgriSmart.Entities.ProductEntity;
@@ -22,6 +24,8 @@ public class SellerDaw {
     private String sellerAddress;
     private String sellerProfilePic;
     private Set<ProductEntity> products;
+
+    private List<String> userRole = new ArrayList<>();
 
     public SellerDaw(SellerEntity seller){
         this.sellerId = seller.getSellerId();
